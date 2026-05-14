@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Tallinn uniform roads</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.20.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.20.0/mapbox-gl.css" rel="stylesheet" />
+  <style>body,html,#map{height:100%;margin:0;padding:0}</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+mapboxgl.accessToken = 'MAPBOX_TOKEN';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [24.75353, 59.43696],
+  zoom: 12
+});
+
+map.on('load', () => {
+  // Add a vector layer from Mapbox Streets and force uniform pixel width
+  map.addLayer({
+    id: 'uniform-roads',
+    type: 'line',
+    source: {
+      type: 'vector',
+      url: 'mapbox://mapbox.mapbox-streets-v8'
+    },
+    'source-layer': 'road',
+    paint: {
+      'line-color': '#2b2b2b',
+      'line-width': 2,
+      'line-opacity': 0.95,
+      'line-cap': 'round',
+      'line-join': 'round'
+    }
+  }, 'road-label'); // insert below labels
+});
+</script>
+</body>
+</html>
